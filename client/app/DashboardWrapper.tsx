@@ -1,4 +1,5 @@
 import React from 'react'
+import Navbar from "./(components)/Navbar/index"
 
 const DashboardWrapper = ({ children }: {children: React.ReactNode}) => {
   return (
@@ -6,7 +7,7 @@ const DashboardWrapper = ({ children }: {children: React.ReactNode}) => {
         sidebar 
        { /*sidebar*/}
        <main className={`dark:bg-dark-bg flex w-full flex-col bg-gray-50 md:pl-64`}>
-        Navbar
+        <Navbar></Navbar>
         {children}
        </main>
     </div>
