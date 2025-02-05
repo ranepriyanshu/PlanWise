@@ -1,7 +1,13 @@
 "use client";
-import React,{useState} from 'react'
+import {useState} from 'react'
 import Image from 'next/image';
-import {LockIcon} from "lucide-react";
+import {LockIcon, LucideIcon, Home} from "lucide-react";
+import Link from 'next/link';
+import { usePathname } from "next/navigation";
+import { useAppDispatch, useAppSelector } from "./../../Redux";
+
+
+
 
 const Sidebar = () => {
    const [showProjects , setShowProjects] = useState(true);
@@ -32,9 +38,80 @@ const Sidebar = () => {
                 </div>
             </div>
             {/* {NavbarLinks} */}
+            <nav className="z-10 w-full">
+                <SideBarLink icon={Home} Label='Home' href='/'/>
+            </nav>
         </div>
     </div> 
   )
-}
+};
 
+interface sideBarLinkProps {
+    href: string;
+    icon: LucideIcon;
+    Label: string;
+    // isCollapsed: boolean;
+
+
+}
+// const SideBarLink = ({
+
+//     href, 
+//     icon: Icon, 
+//     Label,
+//     // isCollapsed
+
+// }: sideBarLinkProps) =>{
+
+//     const pathname = usePathname();
+//     const isActive = pathname === href||(pathname==="/" && href==="/dashboard");
+//     const screenWidth = window.innerWidth;
+
+
+//     const dispatch = useAppDispatch();
+//     const isSidebarCollapsed = useAppSelector((state) => state.global.isSidebarCollapsed);
+
+//     return (
+
+//         <Link href={href} className="w-full">
+//             <div className={`relative flex cursor-pointer items-center gap-3 transition-colors hover:bg-gray-100 dark:bg-black dark:hover:bg-gray-700 ${isActive ? "bg-gray-100 text-white dark:bg-gray-600" : ""}`}>
+
+//                 {isActive && (
+//                     <div className="absolute left-0 to0 h-[100%] w-[5px] bg-blue-200"></div>
+//                 )}
+
+//                  <Icon className='h-6 w-6 text-gray-800 dark:text-white' ></Icon>
+//                  <span className={`font-medium text-gray-800 dark:text-white`}>
+//                     {Label}
+//                  </span>
+//             </div>
+//         </Link>
+//     )
+
+// }
+const SideBarLink = ({ href, icon: Icon, Label }: sideBarLinkProps) => {
+    const pathname = usePathname();
+    const isActive = pathname === href || (pathname === "/" && href === "/dashboard");
+  
+    return (
+      <Link href={href} className="w-full">
+        <div
+          className={`relative flex items-center gap-3 px-4 py-3 transition-all duration-300 
+          ${
+            isActive
+              ? "text-blue-500 font-semibold dark:text-blue-400"
+              : "text-gray-800 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400"
+          }`}
+        >
+          {isActive && (
+            <div className="absolute left-0 top-0 h-full w-[3px] rounded-r-md bg-blue-500 dark:bg-blue-400"></div>
+          )}
+  
+          <Icon className="h-6 w-6" />
+          <span className="font-medium">{Label}</span>
+        </div>
+      </Link>
+    );
+  };
+  
 export default Sidebar
